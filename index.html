@@ -9,20 +9,21 @@
 <body>
 
 <!-- Sidebar -->
-<nav id="sidebar" aria-label="Primary navigation">
-  <h2>AutoCat Menu</h2>
+<nav id="sidebar" aria-label="Primary navigation" class="collapsed">
+  <button id="toggleSidebar" aria-label="Toggle menu">&#9776;</button>
+  <h2 class="sidebarTitle">AutoCat Menu</h2>
   <ul>
-    <li><a href="#dashboard" tabindex="0">Dashboard</a></li>
-    <li><a href="#inventory" tabindex="0">Inventory</a></li>
+    <li><a href="#dashboard" tabindex="0" title="Dashboard">🏠</a></li>
+    <li><a href="#inventory" tabindex="0" title="Inventory">📋</a></li>
 
-    <li><button id="btnAddCar" aria-haspopup="dialog" aria-controls="modalAddCar" tabindex="0">+ Add Car</button></li>
-    <li><button id="btnAddPart" aria-haspopup="dialog" aria-controls="modalAddPart" tabindex="0">+ Add Part</button></li>
+    <li><button id="btnAddCar" aria-haspopup="dialog" aria-controls="modalAddCar" tabindex="0" title="Add Car">➕🚗</button></li>
+    <li><button id="btnAddPart" aria-haspopup="dialog" aria-controls="modalAddPart" tabindex="0" title="Add Part">➕🔧</button></li>
 
-    <li><a href="#sales" tabindex="0">Sales</a></li>
+    <li><a href="#sales" tabindex="0" title="Sales">💰</a></li>
   </ul>
 </nav>
 
-<!-- Main content placeholder -->
+<!-- Main content -->
 <div id="mainContent" tabindex="-1">
   <h1>Welcome to AutoCat Inventory</h1>
   <p>Select "Add Car" or "Add Part" from the menu to get started.</p>
@@ -33,30 +34,32 @@
   <div class="modalCard" role="document">
     <button class="modalClose" aria-label="Close Add Car form">&times;</button>
     <h2 id="modalAddCarTitle">Add New Car</h2>
-    <form id="addCarForm">
+    <form id="addCarForm" enctype="multipart/form-data">
       <label for="make">Make (Brand):</label>
-      <input type="text" id="make" name="make" placeholder="e.g. Toyota" required>
+      <input type="text" id="make" name="make" placeholder="e.g. Toyota" required />
 
       <label for="model">Model:</label>
-      <input type="text" id="model" name="model" placeholder="e.g. Corolla" required>
+      <input type="text" id="model" name="model" placeholder="e.g. Corolla" required />
 
       <label for="year">Year:</label>
-      <input type="number" id="year" name="year" min="1900" max="2099" step="1" placeholder="e.g. 2020" required>
+      <input type="number" id="year" name="year" min="1900" max="2099" step="1" placeholder="e.g. 2020" required />
 
       <label for="vin">VIN (Vehicle Identification Number):</label>
-      <input type="text" id="vin" name="vin" placeholder="17-character VIN" maxlength="17" required>
+      <input type="text" id="vin" name="vin" placeholder="17-character VIN" maxlength="17" required />
 
       <label for="mileage">Mileage (km or miles):</label>
-      <input type="number" id="mileage" name="mileage" min="0" placeholder="e.g. 45000">
+      <input type="number" id="mileage" name="mileage" min="0" placeholder="e.g. 45000" />
 
       <label for="color">Color:</label>
-      <input type="text" id="color" name="color" placeholder="e.g. Red">
+      <input type="text" id="color" name="color" placeholder="e.g. Red" />
 
       <label for="price">Price (USD):</label>
-      <input type="number" id="price" name="price" min="0" step="0.01" placeholder="e.g. 12500" required>
+      <input type="number" id="price" name="price" min="0" step="0.01" placeholder="e.g. 12500" required />
 
-      <label for="photos">Photos (URLs):</label>
-      <textarea id="photos" name="photos" placeholder="Add image URLs separated by commas" rows="3"></textarea>
+      <label for="carPhotos">Upload Photos:</label>
+      <input type="file" id="carPhotos" name="carPhotos" accept="image/*" multiple />
+
+      <div id="photoPreview" class="photo-preview" aria-live="polite" aria-atomic="true"></div>
 
       <button type="submit">Add Car</button>
     </form>
@@ -70,22 +73,22 @@
     <h2 id="modalAddPartTitle">Add New Part</h2>
     <form id="addPartForm">
       <label for="partName">Part Name:</label>
-      <input type="text" id="partName" name="partName" placeholder="e.g. Brake Pad" required>
+      <input type="text" id="partName" name="partName" placeholder="e.g. Brake Pad" required />
 
       <label for="partCategory">Category:</label>
-      <input type="text" id="partCategory" name="partCategory" placeholder="e.g. Brakes" required>
+      <input type="text" id="partCategory" name="partCategory" placeholder="e.g. Brakes" required />
 
       <label for="partCarMake">Car Make (optional):</label>
-      <input type="text" id="partCarMake" name="partCarMake" placeholder="e.g. Toyota">
+      <input type="text" id="partCarMake" name="partCarMake" placeholder="e.g. Toyota" />
 
       <label for="partCarModel">Car Model (optional):</label>
-      <input type="text" id="partCarModel" name="partCarModel" placeholder="e.g. Corolla">
+      <input type="text" id="partCarModel" name="partCarModel" placeholder="e.g. Corolla" />
 
       <label for="partStock">Stock Quantity:</label>
-      <input type="number" id="partStock" name="partStock" min="0" placeholder="e.g. 10" required>
+      <input type="number" id="partStock" name="partStock" min="0" placeholder="e.g. 10" required />
 
       <label for="partPrice">Price (USD):</label>
-      <input type="number" id="partPrice" name="partPrice" min="0" step="0.01" placeholder="e.g. 49.99" required>
+      <input type="number" id="partPrice" name="partPrice" min="0" step="0.01" placeholder="e.g. 49.99" required />
 
       <label for="partDescription">Description:</label>
       <textarea id="partDescription" name="partDescription" placeholder="Short description" rows="3"></textarea>
@@ -96,6 +99,14 @@
 </div>
 
 <script>
+  // Sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleSidebar');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+  });
+
   // Modal open/close logic
   function setupModal(buttonId, modalId) {
     const btn = document.getElementById(buttonId);
@@ -110,32 +121,70 @@
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
       btn.focus();
+      clearForm(modalId);
     });
 
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.style.display = 'none';
         btn.focus();
+        clearForm(modalId);
       }
     });
+  }
+
+  // Clear forms and photo previews on modal close
+  function clearForm(modalId) {
+    if (modalId === 'modalAddCar') {
+      const form = document.getElementById('addCarForm');
+      form.reset();
+      document.getElementById('photoPreview').innerHTML = '';
+    }
+    else if (modalId === 'modalAddPart') {
+      document.getElementById('addPartForm').reset();
+    }
   }
 
   setupModal('btnAddCar', 'modalAddCar');
   setupModal('btnAddPart', 'modalAddPart');
 
-  // Example form submit handlers (replace with your logic)
+  // Add Car photos preview
+  const carPhotosInput = document.getElementById('carPhotos');
+  const photoPreview = document.getElementById('photoPreview');
+
+  carPhotosInput.addEventListener('change', () => {
+    photoPreview.innerHTML = ''; // Clear previous thumbnails
+
+    const files = carPhotosInput.files;
+    if (files.length === 0) return;
+
+    Array.from(files).forEach(file => {
+      if (!file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = file.name;
+        photoPreview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  // Form submit handlers (stub)
   document.getElementById('addCarForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Car added! You can hook this to your backend.');
-    e.target.reset();
+    alert('Car added! Connect this to your backend.');
     document.getElementById('modalAddCar').style.display = 'none';
+    clearForm('modalAddCar');
   });
 
   document.getElementById('addPartForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Part added! You can hook this to your backend.');
-    e.target.reset();
+    alert('Part added! Connect this to your backend.');
     document.getElementById('modalAddPart').style.display = 'none';
+    clearForm('modalAddPart');
   });
 </script>
 
