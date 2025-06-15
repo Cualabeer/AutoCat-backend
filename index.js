@@ -1,3 +1,20 @@
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const carRoutes = require('./routes/carRoutes');
+const partRoutes = require('./routes/partRoutes');
+
+app.use(express.json());
+
+app.get('/', (req, res) => res.send('autoCat API running'));
+
+app.use('/cars', carRoutes);
+app.use('/parts', partRoutes);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`autoCat backend listening on port ${PORT}`);
+});
 // Get all parts
 app.get('/parts', async (req, res) => {
   try {
