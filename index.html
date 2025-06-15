@@ -1,116 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoCat | Inventory Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #f0f2f5;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .navbar {
-      background-color: #212529;
-    }
-    .navbar-brand {
-      color: #fff;
-      font-weight: bold;
-    }
-    .offcanvas-header, .offcanvas-body {
-      background-color: #343a40;
-      color: white;
-    }
-    .offcanvas-body a {
-      color: white;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 1rem;
-    }
-    .offcanvas-body a:hover {
-      text-decoration: underline;
-    }
-    .card {
-      margin-bottom: 1rem;
-    }
-    @media (min-width: 768px) {
-      .card-grid {
-        display: flex;
-        gap: 1rem;
-      }
-      .card-grid .card {
-        flex: 1;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AutoCat Inventory Management</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Top Navbar -->
-  <nav class="navbar navbar-dark">
-    <div class="container-fluid">
-      <button class="btn btn-outline-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
-        <i class="fas fa-bars"></i>
-      </button>
-      <span class="navbar-brand">AutoCat</span>
-    </div>
-  </nav>
+<!-- Sidebar -->
+<nav id="sidebar" aria-label="Primary navigation">
+  <h2>AutoCat Menu</h2>
+  <ul>
+    <li><a href="#dashboard" tabindex="0">Dashboard</a></li>
+    <li><a href="#inventory" tabindex="0">Inventory</a></li>
 
-  <!-- Sidebar -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Navigation</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-      <a href="#"><i class="fas fa-car me-2"></i> Inventory</a>
-      <a href="#"><i class="fas fa-cogs me-2"></i> Parts</a>
-      <a href="#"><i class="fas fa-shopping-cart me-2"></i> Sales</a>
-      <a href="#"><i class="fas fa-users me-2"></i> Customers</a>
-      <a href="#"><i class="fas fa-chart-line me-2"></i> Dashboard</a>
-    </div>
+    <li><button id="btnAddCar" aria-haspopup="dialog" aria-controls="modalAddCar" tabindex="0">+ Add Car</button></li>
+    <li><button id="btnAddPart" aria-haspopup="dialog" aria-controls="modalAddPart" tabindex="0">+ Add Part</button></li>
+
+    <li><a href="#sales" tabindex="0">Sales</a></li>
+  </ul>
+</nav>
+
+<!-- Main content placeholder -->
+<div id="mainContent" tabindex="-1">
+  <h1>Welcome to AutoCat Inventory</h1>
+  <p>Select "Add Car" or "Add Part" from the menu to get started.</p>
+</div>
+
+<!-- Modal Add Car -->
+<div id="modalAddCar" class="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalAddCarTitle" tabindex="-1">
+  <div class="modalCard" role="document">
+    <button class="modalClose" aria-label="Close Add Car form">&times;</button>
+    <h2 id="modalAddCarTitle">Add New Car</h2>
+    <form id="addCarForm">
+      <label for="make">Make (Brand):</label>
+      <input type="text" id="make" name="make" placeholder="e.g. Toyota" required>
+
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" placeholder="e.g. Corolla" required>
+
+      <label for="year">Year:</label>
+      <input type="number" id="year" name="year" min="1900" max="2099" step="1" placeholder="e.g. 2020" required>
+
+      <label for="vin">VIN (Vehicle Identification Number):</label>
+      <input type="text" id="vin" name="vin" placeholder="17-character VIN" maxlength="17" required>
+
+      <label for="mileage">Mileage (km or miles):</label>
+      <input type="number" id="mileage" name="mileage" min="0" placeholder="e.g. 45000">
+
+      <label for="color">Color:</label>
+      <input type="text" id="color" name="color" placeholder="e.g. Red">
+
+      <label for="price">Price (USD):</label>
+      <input type="number" id="price" name="price" min="0" step="0.01" placeholder="e.g. 12500" required>
+
+      <label for="photos">Photos (URLs):</label>
+      <textarea id="photos" name="photos" placeholder="Add image URLs separated by commas" rows="3"></textarea>
+
+      <button type="submit">Add Car</button>
+    </form>
   </div>
+</div>
 
-  <!-- Main Content -->
-  <main class="container my-4">
-    <h2 class="mb-4">Dashboard</h2>
-    
-    <div class="card-grid">
-      <div class="card text-white bg-primary">
-        <div class="card-body">
-          <h5 class="card-title">Cars</h5>
-          <p class="fs-3" id="cars-count">0</p>
-        </div>
-      </div>
-      <div class="card text-white bg-success">
-        <div class="card-body">
-          <h5 class="card-title">Parts</h5>
-          <p class="fs-3" id="parts-count">0</p>
-        </div>
-      </div>
-      <div class="card text-white bg-warning">
-        <div class="card-body">
-          <h5 class="card-title">Sales</h5>
-          <p class="fs-3" id="sales-count">0</p>
-        </div>
-      </div>
-      <div class="card text-white bg-danger">
-        <div class="card-body">
-          <h5 class="card-title">Orders</h5>
-          <p class="fs-3" id="orders-count">0</p>
-        </div>
-      </div>
-    </div>
-  </main>
+<!-- Modal Add Part -->
+<div id="modalAddPart" class="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalAddPartTitle" tabindex="-1">
+  <div class="modalCard" role="document">
+    <button class="modalClose" aria-label="Close Add Part form">&times;</button>
+    <h2 id="modalAddPartTitle">Add New Part</h2>
+    <form id="addPartForm">
+      <label for="partName">Part Name:</label>
+      <input type="text" id="partName" name="partName" placeholder="e.g. Brake Pad" required>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Static demo data
-    document.getElementById("cars-count").textContent = "120";
-    document.getElementById("parts-count").textContent = "568";
-    document.getElementById("sales-count").textContent = "32";
-    document.getElementById("orders-count").textContent = "14";
-  </script>
+      <label for="partCategory">Category:</label>
+      <input type="text" id="partCategory" name="partCategory" placeholder="e.g. Brakes" required>
+
+      <label for="partCarMake">Car Make (optional):</label>
+      <input type="text" id="partCarMake" name="partCarMake" placeholder="e.g. Toyota">
+
+      <label for="partCarModel">Car Model (optional):</label>
+      <input type="text" id="partCarModel" name="partCarModel" placeholder="e.g. Corolla">
+
+      <label for="partStock">Stock Quantity:</label>
+      <input type="number" id="partStock" name="partStock" min="0" placeholder="e.g. 10" required>
+
+      <label for="partPrice">Price (USD):</label>
+      <input type="number" id="partPrice" name="partPrice" min="0" step="0.01" placeholder="e.g. 49.99" required>
+
+      <label for="partDescription">Description:</label>
+      <textarea id="partDescription" name="partDescription" placeholder="Short description" rows="3"></textarea>
+
+      <button type="submit">Add Part</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Modal open/close logic
+  function setupModal(buttonId, modalId) {
+    const btn = document.getElementById(buttonId);
+    const modal = document.getElementById(modalId);
+    const closeBtn = modal.querySelector('.modalClose');
+
+    btn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      modal.focus();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      btn.focus();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        btn.focus();
+      }
+    });
+  }
+
+  setupModal('btnAddCar', 'modalAddCar');
+  setupModal('btnAddPart', 'modalAddPart');
+
+  // Example form submit handlers (replace with your logic)
+  document.getElementById('addCarForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Car added! You can hook this to your backend.');
+    e.target.reset();
+    document.getElementById('modalAddCar').style.display = 'none';
+  });
+
+  document.getElementById('addPartForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Part added! You can hook this to your backend.');
+    e.target.reset();
+    document.getElementById('modalAddPart').style.display = 'none';
+  });
+</script>
+
 </body>
 </html>
