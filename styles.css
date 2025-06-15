@@ -1,0 +1,134 @@
+/* Basic reset and fonts */
+body, html {
+  margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  background: #f4f4f4;
+}
+
+/* Sidebar */
+#sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #222;
+  color: #fff;
+  padding: 1rem;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+#sidebar h2 {
+  margin-bottom: 2rem;
+}
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#sidebar ul li {
+  margin-bottom: 1rem;
+}
+#sidebar a {
+  color: #ccc;
+  text-decoration: none;
+}
+#sidebar button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+#btnAddCar {
+  background-color: #28a745;
+}
+#btnAddCar:hover {
+  background-color: #218838;
+}
+#btnAddPart {
+  background-color: #007bff;
+}
+#btnAddPart:hover {
+  background-color: #0069d9;
+}
+
+/* Main content placeholder */
+#mainContent {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+/* Modal backdrop */
+.modalBackdrop {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal card */
+.modalCard {
+  background: #fff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 420px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Close button */
+.modalClose {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Form styles */
+form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+form input,
+form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+}
+form button[type="submit"] {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 12px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+form button[type="submit"]:hover {
+  background-color: #218838;
+}
