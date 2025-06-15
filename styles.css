@@ -9,57 +9,111 @@ body, html {
 
 /* Sidebar */
 #sidebar {
-  width: 250px;
   height: 100vh;
   background: #222;
   color: #fff;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   box-sizing: border-box;
   flex-shrink: 0;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  position: relative;
 }
-#sidebar h2 {
-  margin-bottom: 2rem;
+
+/* Collapsed sidebar */
+#sidebar.collapsed {
+  width: 60px;
+  padding: 1rem 0.5rem;
 }
+
+/* Sidebar toggle button */
+#toggleSidebar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 0 0.5rem;
+}
+
+/* Sidebar title */
+.sidebarTitle {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hide title in collapsed */
+#sidebar.collapsed .sidebarTitle {
+  display: none;
+}
+
+/* Sidebar list */
 #sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-grow: 1;
 }
 #sidebar ul li {
   margin-bottom: 1rem;
 }
-#sidebar a {
+
+/* Links and buttons in sidebar */
+#sidebar a,
+#sidebar button {
   color: #ccc;
   text-decoration: none;
-}
-#sidebar button {
-  width: 100%;
-  padding: 10px;
+  background: none;
   border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
+  width: 100%;
+  text-align: left;
+  font-weight: 600;
   font-size: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
   transition: background-color 0.2s ease;
 }
-#btnAddCar {
-  background-color: #28a745;
+
+/* Buttons with icons only when collapsed */
+#sidebar.collapsed a,
+#sidebar.collapsed button {
+  justify-content: center;
+  padding: 0.4rem 0;
+  font-size: 1.4rem;
 }
-#btnAddCar:hover {
-  background-color: #218838;
+
+/* Hide text for buttons/links when collapsed */
+#sidebar.collapsed a::after,
+#sidebar.collapsed button::after {
+  display: none;
 }
-#btnAddPart {
-  background-color: #007bff;
-}
-#btnAddPart:hover {
-  background-color: #0069d9;
+
+#sidebar a:hover,
+#sidebar button:hover {
+  background-color: #444;
+  color: #fff;
 }
 
 /* Main content placeholder */
 #mainContent {
   flex-grow: 1;
   padding: 2rem;
+  overflow-y: auto;
 }
 
 /* Modal backdrop */
@@ -131,4 +185,20 @@ form button[type="submit"] {
 }
 form button[type="submit"]:hover {
   background-color: #218838;
+}
+
+/* Photo preview container */
+.photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.photo-preview img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
