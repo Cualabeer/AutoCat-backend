@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoCat | Car Inventory & Parts Management</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    header {
+      background-color: #212529;
+      color: white;
+      padding: 1rem;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #343a40;
+      color: white;
+      padding-top: 1rem;
+    }
+    .sidebar a {
+      color: white;
+      display: block;
+      padding: 0.75rem 1.25rem;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    .content {
+      padding: 2rem;
+    }
+    .card {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-2 sidebar">
+        <h4 class="text-center">AutoCat</h4>
+        <a href="#"><i class="fas fa-car"></i> Inventory</a>
+        <a href="#"><i class="fas fa-cogs"></i> Parts</a>
+        <a href="#"><i class="fas fa-shopping-cart"></i> Sales</a>
+        <a href="#"><i class="fas fa-users"></i> Customers</a>
+        <a href="#"><i class="fas fa-chart-line"></i> Dashboard</a>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
+        <header class="mb-4">
+          <h1>Dashboard</h1>
+        </header>
+
+        <!-- Dashboard Cards -->
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card text-white bg-primary">
+              <div class="card-body">
+                <h5 class="card-title">Cars</h5>
+                <p class="card-text fs-4" id="cars-count">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-success">
+              <div class="card-body">
+                <h5 class="card-title">Parts</h5>
+                <p class="card-text fs-4" id="parts-count">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-warning">
+              <div class="card-body">
+                <h5 class="card-title">Sales</h5>
+                <p class="card-text fs-4" id="sales-count">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-danger">
+              <div class="card-body">
+                <h5 class="card-title">Orders</h5>
+                <p class="card-text fs-4" id="orders-count">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Example static data — you can replace with API calls
+    document.getElementById("cars-count").textContent = "120";
+    document.getElementById("parts-count").textContent = "568";
+    document.getElementById("sales-count").textContent = "32";
+    document.getElementById("orders-count").textContent = "14";
+  </script>
+</body>
+</html>
