@@ -1,4 +1,4 @@
-/* Basic reset and fonts */
+/* Reset & base */
 body, html {
   margin: 0; padding: 0;
   font-family: Arial, sans-serif;
@@ -20,6 +20,7 @@ body, html {
   flex-direction: column;
   transition: width 0.3s ease;
   position: relative;
+  outline: none;
 }
 
 /* Collapsed sidebar */
@@ -114,6 +115,7 @@ body, html {
   flex-grow: 1;
   padding: 2rem;
   overflow-y: auto;
+  outline: none;
 }
 
 /* Modal backdrop */
@@ -201,4 +203,46 @@ form button[type="submit"]:hover {
   object-fit: cover;
   border-radius: 4px;
   border: 1px solid #ccc;
+}
+
+/* Responsive: smaller screens */
+@media (max-width: 768px) {
+  /* Sidebar becomes overlay */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    height: 100vh;
+    width: 200px;
+    z-index: 10000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  #sidebar.expanded {
+    transform: translateX(0);
+  }
+  #sidebar.collapsed {
+    width: 200px;
+  }
+  
+  /* Main content full width & less padding */
+  #mainContent {
+    padding: 1rem;
+  }
+
+  /* Toggle button fixed on top left */
+  #toggleSidebar {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 11000;
+    background: transparent;
+  }
+}
+
+/* Very small screens modal */
+@media (max-width: 400px) {
+  .modalCard {
+    width: 90vw;
+    padding: 1rem;
+  }
 }
